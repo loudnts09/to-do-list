@@ -1,59 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Gestor de Tarefas (To-Do List)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Esta é uma aplicação Laravel completa desenvolvida com o objetivo de gerir uma lista de tarefas (to-do list), com autenticação, CRUD completo e lógica de soft-delete.
 
-## About Laravel
+O projeto foi desenvolvido seguindo a metodologia TDD (Test-Driven Development) para garantir a cobertura de todos os requisitos funcionais e de segurança.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias Utilizadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* **Framework:** Laravel 12
+* **Linguagem:** PHP 8.2+
+* **Banco de Dados:** MySQL
+* **Frontend:** Blade com Bootstrap 5
+* **Testes:** PHPUnit (Testes de Funcionalidade)
+* **Autenticação:** Sistema de autenticação manual (Controllers + Services/Repositories)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Funcionalidades Implementadas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+O projeto cobre todos os requisitos solicitados:
 
-## Laravel Sponsors
+* **Autenticação:** Sistema completo de Login (com validação) e Logout.
+* **Segurança:** As rotas de tarefas são protegidas por *middleware*. Um utilizador só pode ver, editar ou excluir as suas próprias tarefas.
+* **CRUD de Tarefas:**
+    * **Criação:** Criar novas tarefas (com `user_id` associado automaticamente).
+    * **Listagem (Read):** Listar todas as tarefas do utilizador, com paginação.
+    * **Edição (Update):** Atualizar título, descrição e status.
+    * **Exclusão (Delete):** Mover tarefas para a lixeira.
+* **Filtro:** Filtrar a lista de tarefas por status (Pendente ou Concluída).
+* **Soft Deletes:**
+    * As tarefas excluídas vão para uma **Lixeira** (página separada).
+    * As tarefas na lixeira podem ser **Restauradas**.
+* **Validação:** Uso de `FormRequest` para validar todos os dados de entrada.
+* **Views:** Uso de *layouts* Blade (`app.blade.php`) e *partials* (`_alerts`, `_delete_modal`) para evitar repetição de código.
+* **Testes (TDD):** Cobertura de testes de funcionalidade para todos os métodos do CRUD.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🔧 Instruções de Instalação Local
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Siga estes passos para rodar o projeto localmente.
 
-## Contributing
+**1. Clonar o Repositório**
+```bash
+git clone https://github.com/loudnts09/to-do-list.git
+cd to-do-list
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**2. Instalar Dependências**
 
-## Code of Conduct
+Instale as dependências do Composer e do NPM.
+```bash
+composer install
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**3. Configurar o Ambiente**
 
-## Security Vulnerabilities
+Copie o ficheiro de ambiente de exemplo e gere a chave da aplicação.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+**4. Configurar o Banco de Dados (MySQL)**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Crie um novo banco de dados no seu gestor MySQL (ex: todo_list). Depois, edite o arquivo .env com as credenciais:
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=todo_list
+DB_USERNAME=root
+DB_PASSWORD=root
+
+```
+
+**5. Rodar as Migrations e Seeders**
+
+Este comando irá apagar o banco (se ele existir), criar todas as tabelas e popular o banco com um utilizador de teste.
+```bash
+php artisan migrate:fresh --seed
+```
+**5. Iniciar o Servidor**
+
+```bash
+php artisan serve
+```
+A aplicação estará disponível em http://127.0.0.1:8000.
+
+---
+## Acesso ao Sistema
+
+Após rodar os seeders (--seed), pode aceder ao sistema com o utilizador de teste padrão.
+
+Email: teste@email.com 
+
+Senha: Senha-1234
+
+---
+## Rodar os testes
+
+Para executar a suíte de testes TDD (que cobre todas as funcionalidades), certifique-se de que a sua extensão pdo_sqlite do PHP está ativa.
+
+O Laravel está configurado para usar um banco de dados SQLite em memória para testes (via phpunit.xml).
+
+```bash
+php artisan test
+```
