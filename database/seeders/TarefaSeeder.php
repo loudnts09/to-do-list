@@ -18,7 +18,7 @@ class TarefaSeeder extends Seeder
         $user1 = User::factory()->create([
             'name' => 'Utilizador Teste',
             'email' => 'teste@email.com',
-            'password' => Hash::make('senha123'),
+            'password' => Hash::make('Senha-1234'),
         ]);
 
         Tarefa::factory()->count(15)->create([
@@ -33,7 +33,7 @@ class TarefaSeeder extends Seeder
         $user2 = User::factory()->create([
             'name' => 'Outro Utilizador',
             'email' => 'outro@email.com',
-            'password' => Hash::make('senha123'),
+            'password' => Hash::make('Senha-4321'),
         ]);
 
         Tarefa::factory()->count(5)->create([
